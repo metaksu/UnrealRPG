@@ -1,1 +1,8 @@
 *.sln
+*.sdf
+*.suo
+*.opensdf
+
+**/Intermediate
+**/Binaries
+**/Saved/Logs
