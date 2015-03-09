@@ -8,18 +8,31 @@
 ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RPGCharacterCameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("RPGCharacterCameraComponent"));
+	// Set size for collision capsule
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
 
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
-	GetMesh()->AttachParent = GetCapsuleComponent();
-	GetMesh()->AttachParent = RPGCharacterCameraComponent;
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraBoom->AttachTo(RootComponent);
+	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character	
+	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+
+	RPGCharacterCameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("RPGCharacterCameraComponent"));
+	RPGCharacterCameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
+	RPGCharacterCameraComponent->bUsePawnControlRotation = false;
+
 	Health = 100;
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
@@ -46,12 +59,13 @@ void ARPGCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	InputComponent->BindAxis("MoveForward", this, &ARPGCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ARPGCharacter::MoveRight);
-	InputComponent->BindAxis("TurnAtRate", this, &ARPGCharacter::TurnAtRate);
-	InputComponent->BindAxis("LookUpAtRate", this, &ARPGCharacter::LookUpAtRate);
-
+	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	InputComponent->BindAxis("TurnRate", this, &ARPGCharacter::TurnAtRate);
+	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	InputComponent->BindAxis("LookUpRate", this, &ARPGCharacter::LookUpAtRate);
 }
 
-//Movement right - left
+
 void ARPGCharacter::MoveRight(float Value)
 {
 	AddMovementInput(GetActorRightVector(), Value);
@@ -62,6 +76,7 @@ void ARPGCharacter::MoveForward(float Value)
 	AddMovementInput(GetActorForwardVector(), Value);
 }
 
+//Movement right - left
 void ARPGCharacter::TurnAtRate(float Val)
 {
 	// calculate delta for this frame from the rate information
