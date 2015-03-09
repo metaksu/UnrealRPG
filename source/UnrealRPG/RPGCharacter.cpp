@@ -13,6 +13,11 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 
 	RPGCharacterCameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("RPGCharacterCameraComponent"));
 
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->AirControl = 0.2f;
+
 	GetMesh()->AttachParent = GetCapsuleComponent();
 	GetMesh()->AttachParent = RPGCharacterCameraComponent;
 	Health = 100;
@@ -37,13 +42,13 @@ void ARPGCharacter::Tick(float DeltaTime)
 void ARPGCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	check(InputComponent);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	InputComponent->BindAxis("MoveForward", this, &ARPGCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ARPGCharacter::MoveRight);
 	InputComponent->BindAxis("TurnAtRate", this, &ARPGCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUpAtRate", this, &ARPGCharacter::LookUpAtRate);
 
-	//InputComponent->BindAction("Jump", IE_Pressed, this, &ARPGCharacter::OnStartJump);
-	//InputComponent->BindAction("Jump", IE_Released, this, &ARPGCharacter::OnStopJump);
 }
 
 //Movement right - left
