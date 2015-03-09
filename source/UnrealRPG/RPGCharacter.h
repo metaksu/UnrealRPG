@@ -30,7 +30,7 @@ public:
 		UCameraComponent* RPGCharacterCameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+		class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Stats)
 		float Health;
