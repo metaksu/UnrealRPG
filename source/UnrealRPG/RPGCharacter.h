@@ -53,6 +53,10 @@ public:
 
 	void addGold(float);
 	void removeGold(float);
+	void addHealth(float);
+	void removeHealth(float);
+	void addExperience(float);
+	void removeExperience(float);
 
 
 	void addRune(Rune::Runes, float);

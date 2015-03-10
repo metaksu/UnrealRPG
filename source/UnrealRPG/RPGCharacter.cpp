@@ -65,12 +65,22 @@ void ARPGCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 
 void ARPGCharacter::MoveRight(float Value)
 {
-	AddMovementInput(GetActorRightVector(), Value);
+
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Value);
 }
 
 void ARPGCharacter::MoveForward(float Value)
 {
-	AddMovementInput(GetActorForwardVector(), Value);
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+	// get forward vector
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(Direction, Value);
 }
 
 //Movement right - left
@@ -94,6 +104,26 @@ void ARPGCharacter::addGold(float Val)
 void ARPGCharacter::removeGold(float Val)
 {
 	Gold -= Val;
+}
+
+void ARPGCharacter::addHealth(float Val)
+{
+	Health += Val;
+}
+
+void ARPGCharacter::removeHealth(float Val)
+{
+	Health -= Val;
+}
+
+void ARPGCharacter::addExperience(float Val)
+{
+	Experience += Val;
+}
+
+void ARPGCharacter::removeExperience(float Val)
+{
+	Experience -= Val;
 }
 
 void ARPGCharacter::addRune(Rune::Runes takeInRune, float numRunes)
