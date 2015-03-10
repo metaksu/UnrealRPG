@@ -8,6 +8,5 @@ AUnrealRPGGameMode::AUnrealRPGGameMode(const FObjectInitializer& ObjectInitializ
 {
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnOb(TEXT("/Game/Character/BP_Character"));
 	DefaultPawnClass = PlayerPawnOb.Class;
-
 }
 

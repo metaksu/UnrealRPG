@@ -35,7 +35,7 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	Health = 100;
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
-
+	Gold = 0;
 	fireNum = 0;
 	airNum = 0;
 	mindNum = 0;
