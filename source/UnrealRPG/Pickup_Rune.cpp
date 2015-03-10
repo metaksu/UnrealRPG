@@ -9,7 +9,9 @@ using namespace Rune;
 APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
 {
-
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
+	runeType = Rune::Mind;
+	PickupMesh->SetMaterial(0, MindRune.Object);
 }
 
 void APickup_Rune::BeginPlay() {
@@ -20,11 +22,14 @@ void APickup_Rune::BeginPlay() {
 // Called every frame
 void APickup_Rune::Tick(float DeltaTime)
 {
-	if (bHasCollided)
+	Super::Tick(DeltaTime);
+	ARPGCharacter* MyCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (bHasCollided && MyCharacter->bIsEPressed)
 	{
-		ARPGCharacter* MyCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+		
 		randomNum = FMath::FRandRange(lowerRand, upperRand);
-		MyCharacter->addRune(runeType, randomNum);
+		
+		MyCharacter->addRune(runeType, (int)randomNum);
 		this->Destroy();
 	}
 }
