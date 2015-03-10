@@ -25,17 +25,14 @@ APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	case 2:
 		PickupMesh->SetMaterial(0, ChaosRune.Object);
 		runeType = Rune::Chaos;
-		
 		break;
 	case 3:
 		PickupMesh->SetMaterial(0, FireRune.Object);
 		runeType = Rune::Fire;
-		
 		break;
 	case 4:
 		PickupMesh->SetMaterial(0, MindRune.Object);
-		runeType = Rune::Mind;
-		
+		runeType = Rune::Mind;	
 		break;
 	default:
 		runeType = Rune::Air;
