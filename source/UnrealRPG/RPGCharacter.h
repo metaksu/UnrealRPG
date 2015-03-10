@@ -50,6 +50,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = RuneStats)
 		float chaosNum;
 
+	void KeyEPressed();
+	void KeyEReleased();
 
 	void addGold(float);
 	void removeGold(float);
@@ -61,7 +63,7 @@ public:
 
 	void addRune(Rune::Runes, float);
 private:
-
+	bool bIsEPressed;
 
 
 
@@ -70,6 +72,9 @@ protected:
 	void MoveForward(float Value);
 	void OnStartJump(float Value);
 	void OnStopJump(float Value);
+
+	/* Get the aim of the camera */
+	FVector GetCameraAim() const;
 
 	/* Frame rate independent turn */
 	void TurnAtRate(float Val);

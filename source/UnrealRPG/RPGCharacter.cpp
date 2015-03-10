@@ -32,6 +32,8 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	RPGCharacterCameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
 	RPGCharacterCameraComponent->bUsePawnControlRotation = false;
 
+	
+
 	Health = 100;
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
@@ -40,6 +42,9 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	airNum = 0;
 	mindNum = 0;
 	chaosNum = 0;
+
+	bIsEPressed = false;	
+	
 }
 
 // Called every frame
@@ -60,6 +65,9 @@ void ARPGCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAxis("TurnRate", this, &ARPGCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	InputComponent->BindAxis("LookUpRate", this, &ARPGCharacter::LookUpAtRate);
+	InputComponent->BindAction("TakeItem", IE_Pressed,this, &ARPGCharacter::KeyEPressed);
+	InputComponent->BindAction("TakeItem", IE_Released, this, &ARPGCharacter::KeyEReleased);
+
 }
 
 
@@ -96,9 +104,38 @@ void ARPGCharacter::LookUpAtRate(float Val)
 	AddControllerPitchInput(Val * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+FVector ARPGCharacter::GetCameraAim() const
+{
+
+	FVector FinalAim = FVector::ZeroVector;
+
+
+	if (Controller)
+	{
+		FVector	CamLoc;
+		FRotator CamRot;
+		Controller->GetPlayerViewPoint(CamLoc, CamRot);
+		FinalAim = CamRot.Vector();
+	}
+
+	return FinalAim;
+
+}
+
+void ARPGCharacter::KeyEPressed()
+{
+	bIsEPressed = true;
+}
+
+void ARPGCharacter::KeyEReleased()
+{
+	bIsEPressed = false;
+}
+
 void ARPGCharacter::addGold(float Val)
 {
-	Gold += Val;
+	if (bIsEPressed)
+		Gold += Val;
 }
 
 void ARPGCharacter::removeGold(float Val)
@@ -127,23 +164,28 @@ void ARPGCharacter::removeExperience(float Val)
 }
 
 void ARPGCharacter::addRune(Rune::Runes takeInRune, float numRunes)
-{
-	switch (takeInRune)
+{ 
+	//If this doesn't work test without if statement
+	if (bIsEPressed)
 	{
-	case Rune::Fire:
-		fireNum += numRunes;
-		break;
-	case Rune::Chaos:
-		chaosNum += numRunes;
-		break;
-	case Rune::Air:
-		airNum += numRunes;
-		break;
-	case Rune::Mind:
-		mindNum += numRunes;
-		break;
-	default:
-		break;
+		switch (takeInRune)
+		{
+		case Rune::Fire:
+			fireNum += numRunes;
+			break;
+		case Rune::Chaos:
+			chaosNum += numRunes;
+			break;
+		case Rune::Air:
+			airNum += numRunes;
+			break;
+		case Rune::Mind:
+			mindNum += numRunes;
+			break;
+		default:
+			break;
+		}
 	}
+	
 }
 
