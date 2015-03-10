@@ -36,12 +36,10 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 
-}
-
-// Called when the game starts or when spawned
-void ARPGCharacter::BeginPlay()
-{
-
+	fireNum = 0;
+	airNum = 0;
+	mindNum = 0;
+	chaosNum = 0;
 }
 
 // Called every frame
