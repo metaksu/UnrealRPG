@@ -60,10 +60,10 @@ public:
 	void addExperience(float);
 	void removeExperience(float);
 
-
+	bool bIsEPressed;
 	void addRune(Rune::Runes, float);
 private:
-	bool bIsEPressed;
+	
 
 
 

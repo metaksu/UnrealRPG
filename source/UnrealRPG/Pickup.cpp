@@ -13,31 +13,32 @@ APickup::APickup(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = true;
 
 	PickupCollision = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("PickupCollision"));
-
 	RootComponent = PickupCollision;
 
 	PickupMesh = ObjectInitializer.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("PickupMesh"));
 
+	PickupMesh->AttachParent = PickupCollision;
 	PickupMesh->SetSimulatePhysics(false);
 
-
+	bIsActive = true;
+	bHasCollided = false;
 
 }
 
 // Called when the game starts or when spawned
 void APickup::BeginPlay()
 {
-	bIsActive = true;
-	bHasCollided = false;
+	
 
 }
 
 // Called every frame
 void APickup::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	PickupCollision->GetOverlappingActors(MainPlayer, ARPGCharacter::StaticClass());
 
-	if (MainPlayer.Num() == 1)
+	if (MainPlayer.Num() > 0)
 	{
 		bHasCollided = true;
 	}

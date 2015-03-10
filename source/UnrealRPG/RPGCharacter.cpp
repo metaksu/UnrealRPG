@@ -50,7 +50,7 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 // Called every frame
 void ARPGCharacter::Tick(float DeltaTime)
 {
-
+	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input
