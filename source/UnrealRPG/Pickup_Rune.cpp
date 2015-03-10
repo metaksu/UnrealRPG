@@ -9,14 +9,48 @@ using namespace Rune;
 APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
 {
+	randomNum = FMath::FRandRange(1, 5);
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> AirRune(TEXT("/Game/Runes/AirRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> ChaosRune(TEXT("/Game/Runes/ChaosRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> FireRune(TEXT("/Game/Runes/FireRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
+	switch ((int)randomNum)
+	{
+
+	case 1:
+		PickupMesh->SetMaterial(0, AirRune.Object);
+		runeType = Rune::Air;
+		
+		break;
+	case 2:
+		PickupMesh->SetMaterial(0, ChaosRune.Object);
+		runeType = Rune::Chaos;
+		
+		break;
+	case 3:
+		PickupMesh->SetMaterial(0, FireRune.Object);
+		runeType = Rune::Fire;
+		
+		break;
+	case 4:
+		PickupMesh->SetMaterial(0, MindRune.Object);
+		runeType = Rune::Mind;
+		
+		break;
+	default:
+		runeType = Rune::Air;
+		PickupMesh->SetMaterial(0, AirRune.Object);
+		break;
+	}
+	/*
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
 	runeType = Rune::Mind;
-	PickupMesh->SetMaterial(0, MindRune.Object);
+	PickupMesh->SetMaterial(0, MindRune.Object);*/
 }
 
 void APickup_Rune::BeginPlay() {
 	lowerRand = 1;
-	upperRand = 5;
+	upperRand = 6;
 }
 
 // Called every frame
