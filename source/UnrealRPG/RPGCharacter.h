@@ -6,7 +6,6 @@
 #include "Pickup_Rune.h"
 #include "RPGCharacter.generated.h"
 
-using namespace Rune;
 
 UCLASS()
 class UNREALRPG_API ARPGCharacter : public ACharacter
@@ -61,7 +60,7 @@ public:
 	void removeExperience(float);
 
 	bool bIsEPressed;
-	void addRune(Rune::Runes, float);
+	void addRune(Runes, float);
 private:
 	
 

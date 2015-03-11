@@ -4,7 +4,6 @@
 #include "Pickup_Rune.h"
 #include "RPGCharacter.h"
 
-using namespace Rune;
 
 APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
@@ -19,23 +18,23 @@ APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 
 	case 1:
 		PickupMesh->SetMaterial(0, AirRune.Object);
-		runeType = Rune::Air;
+		runeType = Runes::Air;
 		
 		break;
 	case 2:
 		PickupMesh->SetMaterial(0, ChaosRune.Object);
-		runeType = Rune::Chaos;
+		runeType = Runes::Chaos;
 		break;
 	case 3:
 		PickupMesh->SetMaterial(0, FireRune.Object);
-		runeType = Rune::Fire;
+		runeType = Runes::Fire;
 		break;
 	case 4:
 		PickupMesh->SetMaterial(0, MindRune.Object);
-		runeType = Rune::Mind;	
+		runeType = Runes::Mind;	
 		break;
 	default:
-		runeType = Rune::Air;
+		runeType = Runes::Air;
 		PickupMesh->SetMaterial(0, AirRune.Object);
 		break;
 	}
@@ -77,19 +76,19 @@ void APickup_Rune::setRuneType(float takeIn)
 	switch ((int)takeIn)
 	{
 	case 1:
-		runeType = Rune::Air;
+		runeType = Runes::Air;
 		break;
 	case 2:
-		runeType = Rune::Chaos;
+		runeType = Runes::Chaos;
 		break;
 	case 3:
-		runeType = Rune::Fire;
+		runeType = Runes::Fire;
 		break;
 	case 4:
-		runeType = Rune::Mind;
+		runeType = Runes::Mind;
 		break;
 	default:
-		runeType = Rune::Air;
+		runeType = Runes::Air;
 		break;
 
 	}

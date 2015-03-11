@@ -9,14 +9,10 @@
 *
 */
 
-namespace Rune
+enum class Runes : short
 {
-	UENUM()
-	enum Runes
-	{
-		Fire, Chaos, Air, Mind
-	};
-}
+	Fire, Chaos, Air, Mind
+};
 
 UCLASS()
 class UNREALRPG_API APickup_Rune : public APickup
@@ -29,7 +25,7 @@ public:
 	float randomNum;
 	float lowerRand, upperRand;
 
-	Rune::Runes runeType;
+	Runes runeType;
 
 	void setRuneType(float);
 

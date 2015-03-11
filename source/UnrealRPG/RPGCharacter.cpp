@@ -163,23 +163,23 @@ void ARPGCharacter::removeExperience(float Val)
 	Experience -= Val;
 }
 
-void ARPGCharacter::addRune(Rune::Runes takeInRune, float numRunes)
+void ARPGCharacter::addRune(Runes takeInRune, float numRunes)
 { 
 	//If this doesn't work test without if statement
 	if (bIsEPressed)
 	{
 		switch (takeInRune)
 		{
-		case Rune::Fire:
+		case Runes::Fire:
 			fireNum += numRunes;
 			break;
-		case Rune::Chaos:
+		case Runes::Chaos:
 			chaosNum += numRunes;
 			break;
-		case Rune::Air:
+		case Runes::Air:
 			airNum += numRunes;
 			break;
-		case Rune::Mind:
+		case Runes::Mind:
 			mindNum += numRunes;
 			break;
 		default:
