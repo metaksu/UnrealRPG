@@ -9,6 +9,8 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+	static ConstructorHelpers::FClassFinder<ASpell> Spell(TEXT("/Game/Spells/BP_Spell"));
+	SpellToSpawn = Spell.Class;
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -59,6 +61,8 @@ void ARPGCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	check(InputComponent);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	InputComponent->BindAction("Fire", IE_Pressed, this, &ARPGCharacter::KeyFPressed);
+	InputComponent->BindAction("Fire", IE_Released, this, &ARPGCharacter::KeyFReleased);
 	InputComponent->BindAxis("MoveForward", this, &ARPGCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ARPGCharacter::MoveRight);
 	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
@@ -130,6 +134,22 @@ void ARPGCharacter::KeyEPressed()
 void ARPGCharacter::KeyEReleased()
 {
 	bIsEPressed = false;
+}
+
+void ARPGCharacter::KeyFPressed()
+{
+	UWorld* const World = GetWorld();
+	if (World)
+	{
+		const FActorSpawnParameters myParameter;
+		FVector Location = GetActorLocation();
+		ASpell* const SpellProjectile = World->SpawnActor<ASpell>(SpellToSpawn, Location, GetActorRotation(), myParameter);
+	}
+}
+
+void ARPGCharacter::KeyFReleased()
+{
+	
 }
 
 void ARPGCharacter::addGold(float Val)

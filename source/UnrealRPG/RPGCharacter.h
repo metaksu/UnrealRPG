@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "Spell.h"
 #include "GameFramework/Character.h"
 #include "Pickup_Rune.h"
 #include "RPGCharacter.generated.h"
@@ -21,6 +21,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Projectile)
+		TSubclassOf<ASpell> SpellToSpawn;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 		UCameraComponent* RPGCharacterCameraComponent;
@@ -49,8 +52,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = RuneStats)
 		float chaosNum;
 
-	void KeyEPressed();
-	void KeyEReleased();
+
 
 	void addGold(float);
 	void removeGold(float);
@@ -83,6 +85,13 @@ protected:
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	float BaseTurnRate;
+
+	void KeyEPressed();
+	void KeyEReleased();
+
+	void KeyFPressed();
+	void KeyFReleased();
+
 
 	/** Base lookup rate, in deg/sec. Other scaling may affect final lookup rate. */
 	float BaseLookUpRate;
