@@ -8,45 +8,60 @@
 APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
 {
-	randomNum = FMath::FRandRange(1, 5);
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> AirRune(TEXT("/Game/Runes/AirRune_Mat"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> ChaosRune(TEXT("/Game/Runes/ChaosRune_Mat"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> FireRune(TEXT("/Game/Runes/FireRune_Mat"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
-	switch ((int)randomNum)
-	{
 
-	case 1:
-		PickupMesh->SetMaterial(0, AirRune.Object);
-		runeType = Runes::Air;
-		
-		break;
-	case 2:
-		PickupMesh->SetMaterial(0, ChaosRune.Object);
-		runeType = Runes::Chaos;
-		break;
-	case 3:
-		PickupMesh->SetMaterial(0, FireRune.Object);
-		runeType = Runes::Fire;
-		break;
-	case 4:
-		PickupMesh->SetMaterial(0, MindRune.Object);
-		runeType = Runes::Mind;	
-		break;
-	default:
-		runeType = Runes::Air;
-		PickupMesh->SetMaterial(0, AirRune.Object);
-		break;
-	}
-	/*
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
-	runeType = Rune::Mind;
-	PickupMesh->SetMaterial(0, MindRune.Object);*/
+	
+	
+	static ConstructorHelpers::FObjectFinder<UMaterial> AirRune(TEXT("/Game/Runes/AirRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> ChaosRune(TEXT("/Game/Runes/ChaosRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> FireRune(TEXT("/Game/Runes/FireRune_Mat"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
+
+	AirRunes = AirRune.Object;
+	ChaosRunes = ChaosRune.Object;
+	FireRunes = FireRune.Object;
+	MindRunes = MindRune.Object;
+	
+
+	
+	//static ConstructorHelpers::FObjectFinder<UMaterialInterface> MindRune(TEXT("/Game/Runes/MindRune_Mat"));
+	//runeType = Runes::Mind;
+	//PickupMesh->SetMaterial(0, MindRune.Object);
 }
 
 void APickup_Rune::BeginPlay() {
 	lowerRand = 1;
 	upperRand = 6;
+	lowerRand2 = 2;
+	upperRand2 = 5;
+
+	randomNum1 = FMath::FRandRange(lowerRand2, upperRand2);
+
+	switch ((int)randomNum1)
+	{
+
+	case 1:
+		PickupMesh->SetMaterial(0, AirRunes);
+		runeType = Runes::Air;
+
+		break;
+	case 2:
+		PickupMesh->SetMaterial(0, ChaosRunes);
+		runeType = Runes::Chaos;
+		break;
+	case 3:
+		PickupMesh->SetMaterial(0, FireRunes);
+		runeType = Runes::Fire;
+		break;
+	case 4:
+		PickupMesh->SetMaterial(0, MindRunes);
+		runeType = Runes::Mind;
+		break;
+	default:
+		runeType = Runes::Air;
+		PickupMesh->SetMaterial(0, AirRunes);
+		break;
+	}
+
 }
 
 // Called every frame
