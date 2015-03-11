@@ -22,8 +22,13 @@ class UNREALRPG_API APickup_Rune : public APickup
 public:
 	APickup_Rune(const FObjectInitializer& ObjectInitializer);
 
-	float randomNum;
-	float lowerRand, upperRand;
+	UMaterial* AirRunes;
+	UMaterial* MindRunes;
+	UMaterial* ChaosRunes;
+	UMaterial* FireRunes;
+
+	float randomNum, randomNum1;
+	float lowerRand, upperRand, lowerRand2, upperRand2;
 
 	Runes runeType;
 
