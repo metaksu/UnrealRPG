@@ -34,7 +34,7 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 
 	
 
-	Health = 100;
+	Health = 1;
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 	Gold = 0;
@@ -50,6 +50,14 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 // Called every frame
 void ARPGCharacter::Tick(float DeltaTime)
 {
+	if (bIsFalling)
+	{
+		totalTime += DeltaTime;
+	}
+	else
+	{
+		totalTime = 0;
+	}
 	Super::Tick(DeltaTime);
 }
 
@@ -161,6 +169,19 @@ void ARPGCharacter::addExperience(float Val)
 void ARPGCharacter::removeExperience(float Val)
 {
 	Experience -= Val;
+}
+
+void ARPGCharacter::Falling()
+{
+	bIsFalling = true;
+}
+
+void ARPGCharacter::OnLanded(const FHitResult & Hit)
+{
+	if (totalTime > 1)
+	{
+		removeHealth(0.2);
+	}
 }
 
 void ARPGCharacter::addRune(Runes takeInRune, float numRunes)

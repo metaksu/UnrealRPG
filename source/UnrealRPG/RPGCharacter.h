@@ -59,6 +59,11 @@ public:
 	void addExperience(float);
 	void removeExperience(float);
 
+	virtual void OnLanded(const FHitResult&);
+	virtual void Falling();
+
+	float startTime, totalTime;
+	bool bIsFalling;
 	bool bIsEPressed;
 	void addRune(Runes, float);
 private:
