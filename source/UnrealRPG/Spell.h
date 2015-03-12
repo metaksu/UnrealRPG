@@ -4,7 +4,6 @@
 #include "GameFramework/Actor.h"
 #include "Spell.generated.h"
 
-
 UCLASS()
 class UNREALRPG_API ASpell : public AActor
 {
@@ -37,6 +36,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
-
+	UFUNCTION()
+		void ProjectileHit(AActor* OtherActor);
 
 };

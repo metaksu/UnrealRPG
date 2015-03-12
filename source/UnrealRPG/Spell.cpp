@@ -9,7 +9,6 @@
 ASpell::ASpell(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
 {
-	
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -32,8 +31,10 @@ ASpell::ASpell(const FObjectInitializer& ObjectInitializer)
 		MovementComponent->HomingTargetComponent = MyCharacter->RPGCharacterCameraComponent;
 	MovementComponent->bIsHomingProjectile = true;
 	RootComponent = SphereCollision;
+	SphereCollision->SetSimulatePhysics(true);
 	CastedSpell->AttachParent = RootComponent;
 	Explosion->AttachParent = RootComponent;
+	OnActorBeginOverlap.AddDynamic(this, &ASpell::ProjectileHit);
 }
 
 
@@ -42,6 +43,22 @@ void ASpell::BeginPlay()
 {
 	Super::BeginPlay();
 
+}
+
+
+void ASpell::ProjectileHit(AActor* OtherActor)
+{
+	ARPGCharacter* MyCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+	Explosion->Activate();
+	if (OtherActor->StaticClass == MyCharacter->StaticClass)
+	{
+
+	}
+	else
+	{
+		this->Destroy();
+	}
+	
 }
 
 // Called every frame
