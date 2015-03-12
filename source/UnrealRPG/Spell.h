@@ -20,6 +20,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Cast)
 		UParticleSystemComponent* Explosion;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
+		USphereComponent* SphereCollision;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
 		UProjectileMovementComponent* MovementComponent;
 

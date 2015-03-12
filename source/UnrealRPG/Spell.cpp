@@ -13,27 +13,28 @@ ASpell::ASpell(const FObjectInitializer& ObjectInitializer)
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Speed = 100;
+	Speed = 5000;
 
 	CastedSpell = ObjectInitializer.CreateDefaultSubobject<UParticleSystemComponent>(this, TEXT("CastedSpell"));
 	Explosion = ObjectInitializer.CreateDefaultSubobject<UParticleSystemComponent>(this, TEXT("Explosion"));
-
+	SphereCollision = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("SphereCollision"));
 	CastedSpell->ActivateSystem(true);
 	Explosion->ActivateSystem(true);
 
 	CastedSpell->bVisible = true;
-	Explosion->bVisible = false;
+	Explosion->bVisible = true;
 	ARPGCharacter* MyCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
 	MovementComponent = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("MovementComponent"));
-	MovementComponent->bIsHomingProjectile = true;
+	MovementComponent->ProjectileGravityScale = 0;
+	MovementComponent->bShouldBounce = true;
 	MovementComponent->InitialSpeed = Speed;
-	//MovementComponent->HomingTargetComponent = MyCharacter->;
-
+	if (MyCharacter)
+		MovementComponent->HomingTargetComponent = MyCharacter->RPGCharacterCameraComponent;
+	MovementComponent->bIsHomingProjectile = true;
+	RootComponent = SphereCollision;
 	CastedSpell->AttachParent = RootComponent;
 	Explosion->AttachParent = RootComponent;
 }
-
-
 
 
 // Called when the game starts or when spawned

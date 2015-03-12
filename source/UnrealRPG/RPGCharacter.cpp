@@ -53,6 +53,7 @@ ARPGCharacter::ARPGCharacter(const FObjectInitializer& ObjectInitializer)
 void ARPGCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//Location = GetActorLocation();
 }
 
 // Called to bind functionality to input
@@ -141,9 +142,10 @@ void ARPGCharacter::KeyFPressed()
 	UWorld* const World = GetWorld();
 	if (World)
 	{
-		const FActorSpawnParameters myParameter;
-		FVector Location = GetActorLocation();
-		ASpell* const SpellProjectile = World->SpawnActor<ASpell>(SpellToSpawn, Location, GetActorRotation(), myParameter);
+		FActorSpawnParameters myParameter;
+		myParameter.Instigator = Instigator;
+		myParameter.Owner = this;
+		ASpell* SpellProjectile = World->SpawnActor<ASpell>(SpellToSpawn, GetActorLocation(), GetActorRotation(), myParameter);
 	}
 }
 

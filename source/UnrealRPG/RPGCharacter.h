@@ -52,7 +52,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = RuneStats)
 		float chaosNum;
 
-
+	//FVector Location;
 
 	void addGold(float);
 	void removeGold(float);
