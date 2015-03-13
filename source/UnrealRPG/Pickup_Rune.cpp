@@ -8,9 +8,6 @@
 APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
 {
-
-	
-	
 	static ConstructorHelpers::FObjectFinder<UMaterial> AirRune(TEXT("/Game/Runes/AirRune_Mat"));
 	static ConstructorHelpers::FObjectFinder<UMaterial> ChaosRune(TEXT("/Game/Runes/ChaosRune_Mat"));
 	static ConstructorHelpers::FObjectFinder<UMaterial> FireRune(TEXT("/Game/Runes/FireRune_Mat"));
@@ -31,7 +28,7 @@ APickup_Rune::APickup_Rune(const FObjectInitializer& ObjectInitializer)
 void APickup_Rune::BeginPlay() {
 	lowerRand = 1;
 	upperRand = 6;
-	lowerRand2 = 2;
+	lowerRand2 = 1;
 	upperRand2 = 5;
 
 	randomNum1 = FMath::FRandRange(lowerRand2, upperRand2);
@@ -78,34 +75,3 @@ void APickup_Rune::Tick(float DeltaTime)
 		this->Destroy();
 	}
 }
-
-void APickup_Rune::setRuneType(float takeIn)
-{
-	/*
-	* 1 = air
-	* 2 = chaos
-	* 3 = fire
-	* 4 = mind
-	*/
-
-	switch ((int)takeIn)
-	{
-	case 1:
-		runeType = Runes::Air;
-		break;
-	case 2:
-		runeType = Runes::Chaos;
-		break;
-	case 3:
-		runeType = Runes::Fire;
-		break;
-	case 4:
-		runeType = Runes::Mind;
-		break;
-	default:
-		runeType = Runes::Air;
-		break;
-
-	}
-}
-

@@ -18,7 +18,6 @@ ASpell::ASpell(const FObjectInitializer& ObjectInitializer)
 	Explosion = ObjectInitializer.CreateDefaultSubobject<UParticleSystemComponent>(this, TEXT("Explosion"));
 	SphereCollision = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("SphereCollision"));
 	CastedSpell->ActivateSystem(true);
-	Explosion->ActivateSystem(true);
 
 	CastedSpell->bVisible = true;
 	Explosion->bVisible = true;
@@ -48,17 +47,8 @@ void ASpell::BeginPlay()
 
 void ASpell::ProjectileHit(AActor* OtherActor)
 {
-	ARPGCharacter* MyCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
-	Explosion->Activate();
-	if (OtherActor->StaticClass == MyCharacter->StaticClass)
-	{
-
-	}
-	else
-	{
-		this->Destroy();
-	}
-	
+	Explosion->ActivateSystem(true);
+	this->Destroy();
 }
 
 // Called every frame
