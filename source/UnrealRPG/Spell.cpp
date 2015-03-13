@@ -30,7 +30,7 @@ ASpell::ASpell(const FObjectInitializer& ObjectInitializer)
 		MovementComponent->HomingTargetComponent = MyCharacter->RPGCharacterCameraComponent;
 	MovementComponent->bIsHomingProjectile = true;
 	RootComponent = SphereCollision;
-	SphereCollision->SetSimulatePhysics(true);
+	SphereCollision->SetSimulatePhysics(false);
 	CastedSpell->AttachParent = RootComponent;
 	Explosion->AttachParent = RootComponent;
 	OnActorBeginOverlap.AddDynamic(this, &ASpell::ProjectileHit);
@@ -48,7 +48,7 @@ void ASpell::BeginPlay()
 void ASpell::ProjectileHit(AActor* OtherActor)
 {
 	Explosion->ActivateSystem(true);
-	this->Destroy();
+	//this->Destroy();
 }
 
 // Called every frame

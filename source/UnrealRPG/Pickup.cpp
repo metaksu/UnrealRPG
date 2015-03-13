@@ -13,12 +13,12 @@ APickup::APickup(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = true;
 
 	PickupCollision = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("PickupCollision"));
-	RootComponent = PickupCollision;
+	RootComponent = PickupMesh;
 
 	PickupMesh = ObjectInitializer.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("PickupMesh"));
 
-	PickupMesh->AttachParent = PickupCollision;
-	PickupMesh->SetSimulatePhysics(false);
+	PickupCollision->AttachParent = PickupCollision;
+	PickupCollision ->SetSimulatePhysics(false);
 
 	bIsActive = true;
 	bHasCollided = false;
