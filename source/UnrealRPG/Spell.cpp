@@ -48,7 +48,7 @@ void ASpell::BeginPlay()
 void ASpell::ProjectileHit(AActor* OtherActor)
 {
 	Explosion->ActivateSystem(true);
-	this->Destroy();
+	//this->Destroy();
 }
 
 // Called every frame
